@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>فرابکر | به زودی 🌿</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Ethers.js برای اتصال به کیف پول -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
 
@@ -26,6 +25,7 @@
             position: relative;
         }
 
+        /* ===== ANIMATED BACKGROUND ===== */
         .bg-particles {
             position: fixed;
             top: 0;
@@ -45,20 +45,10 @@
         }
 
         @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) scale(1);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
         }
 
         .particle:nth-child(1) { width: 300px; height: 300px; left: 10%; animation-duration: 20s; animation-delay: 0s; }
@@ -97,6 +87,7 @@
             width: 100%;
         }
 
+        /* ===== LOGO ===== */
         .logo {
             font-size: 4.5rem;
             font-weight: 900;
@@ -154,6 +145,174 @@
             line-height: 1.8;
         }
 
+        /* ===== WALLET SECTION ===== */
+        .wallet-section {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin: 24px 0 32px;
+        }
+
+        .wallet-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 28px;
+            border-radius: 40px;
+            border: none;
+            font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #0a0a0a;
+        }
+
+        .wallet-btn.metamask {
+            background: linear-gradient(135deg, #f6851b, #e2761b);
+            box-shadow: 0 4px 20px rgba(246, 133, 27, 0.3);
+        }
+
+        .wallet-btn.metamask:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(246, 133, 27, 0.4);
+        }
+
+        .wallet-btn.phantom {
+            background: linear-gradient(135deg, #ab9ff2, #7b6ed6);
+            box-shadow: 0 4px 20px rgba(171, 159, 242, 0.3);
+        }
+
+        .wallet-btn.phantom:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(171, 159, 242, 0.4);
+        }
+
+        .wallet-btn i {
+            font-size: 1.4rem;
+        }
+
+        .wallet-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard {
+            display: none;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            padding: 32px;
+            margin: 24px 0;
+            text-align: right;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .dashboard .user-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #c97e2c, #f5a623);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .dashboard .user-details {
+            flex: 1;
+        }
+
+        .dashboard .user-details .address {
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: rgba(245, 240, 234, 0.6);
+            direction: ltr;
+        }
+
+        .dashboard .user-details .balance {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #f5a623;
+        }
+
+        .dashboard .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .dashboard .stat-item {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .dashboard .stat-item .number {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #f5a623;
+        }
+
+        .dashboard .stat-item .label {
+            font-size: 0.7rem;
+            color: rgba(245, 240, 234, 0.4);
+            margin-top: 4px;
+        }
+
+        .dashboard .logout-btn {
+            margin-top: 16px;
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: #f5f0ea;
+            font-family: 'Vazirmatn', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .dashboard .logout-btn:hover {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .wallet-status {
+            font-size: 0.85rem;
+            color: rgba(245, 240, 234, 0.4);
+            margin-bottom: 16px;
+        }
+
+        .wallet-status .connected {
+            color: #2ecc71;
+        }
+
+        /* ===== COUNTDOWN ===== */
         .countdown {
             display: flex;
             justify-content: center;
@@ -197,274 +356,31 @@
             display: block;
         }
 
-        .progress-wrapper {
-            max-width: 400px;
-            margin: 0 auto 32px;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            color: rgba(245, 240, 234, 0.5);
-            margin-bottom: 8px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 78%;
-            background: linear-gradient(90deg, #c97e2c, #f5a623, #2d6a2d);
-            background-size: 200% 100%;
-            border-radius: 4px;
-            animation: progressAnim 2s ease-in-out infinite;
-            transition: width 1s ease;
-        }
-
-        @keyframes progressAnim {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin: 32px 0 40px;
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 20px 16px;
-            transition: all 0.3s;
-        }
-
-        .feature-item:hover {
-            background: rgba(255, 255, 255, 0.06);
-            transform: translateY(-4px);
-            border-color: rgba(201, 126, 44, 0.2);
-        }
-
-        .feature-item .icon {
-            font-size: 2rem;
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .feature-item .label {
-            font-size: 0.8rem;
-            color: rgba(245, 240, 234, 0.6);
-        }
-
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin: 24px 0 32px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 32px;
-            border-radius: 40px;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #c97e2c, #f5a623);
-            color: #0a0a0a;
-            box-shadow: 0 4px 24px rgba(201, 126, 44, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 8px 40px rgba(201, 126, 44, 0.4);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: #f5f0ea;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-4px);
-            border-color: rgba(201, 126, 44, 0.3);
-        }
-
-        .btn i {
-            font-size: 1.1rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 24px;
-        }
-
-        .social-links a {
-            color: rgba(245, 240, 234, 0.3);
-            font-size: 1.4rem;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .social-links a:hover {
-            color: #c97e2c;
-            transform: translateY(-4px) scale(1.1);
-        }
-
-        .notify-form {
-            display: flex;
-            max-width: 420px;
-            margin: 0 auto;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .notify-form input {
-            flex: 1;
-            min-width: 200px;
-            padding: 12px 20px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.04);
-            color: #f5f0ea;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.9rem;
-            outline: none;
-            transition: all 0.3s;
-        }
-
-        .notify-form input:focus {
-            border-color: #c97e2c;
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .notify-form input::placeholder {
-            color: rgba(245, 240, 234, 0.3);
-        }
-
-        .notify-form .btn {
-            padding: 12px 24px;
-            font-size: 0.85rem;
-        }
-
-        .footer {
-            margin-top: 40px;
-            font-size: 0.7rem;
-            color: rgba(245, 240, 234, 0.15);
-            letter-spacing: 1px;
-        }
-
-        .footer a {
-            color: rgba(245, 240, 234, 0.2);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer a:hover {
-            color: rgba(201, 126, 44, 0.5);
-        }
-
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .logo {
-                font-size: 3rem;
-            }
-            .main-title {
-                font-size: 2rem;
-            }
-            .countdown {
-                gap: 12px;
-            }
-            .countdown-item {
-                padding: 12px 16px;
-                min-width: 60px;
-            }
-            .countdown-number {
-                font-size: 1.8rem;
-            }
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            .notify-form {
-                flex-direction: column;
-                align-items: center;
-            }
-            .notify-form input {
-                width: 100%;
-                min-width: unset;
-            }
+            .logo { font-size: 3rem; }
+            .main-title { font-size: 2rem; }
+            .countdown { gap: 12px; }
+            .countdown-item { padding: 12px 16px; min-width: 60px; }
+            .countdown-number { font-size: 1.8rem; }
+            .dashboard .stats { grid-template-columns: 1fr 1fr; }
+            .wallet-section { flex-direction: column; align-items: center; }
+            .wallet-btn { width: 100%; justify-content: center; }
         }
 
         @media (max-width: 480px) {
-            .logo {
-                font-size: 2.2rem;
-            }
-            .main-title {
-                font-size: 1.6rem;
-            }
-            .countdown {
-                gap: 8px;
-            }
-            .countdown-item {
-                padding: 10px 12px;
-                min-width: 50px;
-                border-radius: 12px;
-            }
-            .countdown-number {
-                font-size: 1.4rem;
-            }
-            .features {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-            .feature-item {
-                padding: 14px 10px;
-            }
-            .feature-item .icon {
-                font-size: 1.5rem;
-            }
-            .buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            .subtitle {
-                font-size: 0.95rem;
-            }
+            .logo { font-size: 2.2rem; }
+            .main-title { font-size: 1.6rem; }
+            .countdown { gap: 8px; }
+            .countdown-item { padding: 10px 12px; min-width: 50px; border-radius: 12px; }
+            .countdown-number { font-size: 1.4rem; }
+            .dashboard .stats { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== BACKGROUND ===== -->
     <div class="bg-particles">
         <div class="particle"></div>
         <div class="particle"></div>
@@ -478,6 +394,7 @@
 
     <div class="glow-orb"></div>
 
+    <!-- ===== MAIN CONTENT ===== -->
     <div class="container">
         <div class="logo">
             فرابکر
@@ -495,6 +412,55 @@
             در کنار شما خواهیم بود 🌿
         </p>
 
+        <!-- ===== WALLET BUTTONS ===== -->
+        <div class="wallet-section">
+            <button class="wallet-btn metamask" id="connectMetamask">
+                <i class="fab fa-ethereum"></i>
+                اتصال با متامسک
+            </button>
+            <button class="wallet-btn phantom" id="connectPhantom">
+                <i class="fas fa-wallet"></i>
+                اتصال با فانتوم
+            </button>
+        </div>
+
+        <!-- ===== WALLET STATUS ===== -->
+        <div class="wallet-status" id="walletStatus">
+            ⚡ برای ورود، یکی از کیف پول‌های خود را متصل کنید
+        </div>
+
+        <!-- ===== DASHBOARD ===== -->
+        <div class="dashboard" id="dashboard">
+            <div class="user-info">
+                <div class="user-avatar">👤</div>
+                <div class="user-details">
+                    <div><strong id="userName">کاربر</strong></div>
+                    <div class="address" id="userAddress">0x0000...0000</div>
+                    <div class="balance" id="userBalance">۰ ETH</div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="number" id="statPoints">۰</div>
+                    <div class="label">امتیاز وفاداری</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" id="statOrders">۰</div>
+                    <div class="label">سفارش‌ها</div>
+                </div>
+                <div class="stat-item">
+                    <div class="number" id="statDiscount">۰٪</div>
+                    <div class="label">تخفیف ویژه</div>
+                </div>
+            </div>
+
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> خروج از حساب
+            </button>
+        </div>
+
+        <!-- ===== COUNTDOWN ===== -->
         <div class="countdown" id="countdown">
             <div class="countdown-item">
                 <span class="countdown-number" id="days">۰۰</span>
@@ -514,86 +480,137 @@
             </div>
         </div>
 
-        <div class="progress-wrapper">
-            <div class="progress-label">
-                <span>پیشرفت توسعه</span>
-                <span id="progressText">۷۸٪</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill" style="width:78%;"></div>
-            </div>
-        </div>
-
-        <div class="features">
-            <div class="feature-item">
-                <span class="icon">🫒</span>
-                <span class="label">زیتون‌های ارگانیک</span>
-            </div>
-            <div class="feature-item">
-                <span class="icon">🧴</span>
-                <span class="label">روغن‌های باکیفیت</span>
-            </div>
-            <div class="feature-item">
-                <span class="icon">🏪</span>
-                <span class="label">اتصال به فروشگاه‌ها</span>
-            </div>
-            <div class="feature-item">
-                <span class="icon">🌿</span>
-                <span class="label">محصولات طبیعی</span>
-            </div>
-            <div class="feature-item">
-                <span class="icon">🚀</span>
-                <span class="label">تحویل سریع</span>
-            </div>
-            <div class="feature-item">
-                <span class="icon">🔗</span>
-                <span class="label">پشتیبانی Web3</span>
-            </div>
-        </div>
-
-        <div class="buttons">
-            <a href="https://github.com/yourusername/farabekr" target="_blank" class="btn btn-primary">
-                <i class="fab fa-github"></i>
-                گیت‌هاب پروژه
-            </a>
-            <a href="https://github.com/yourusername/farabekr/issues" target="_blank" class="btn btn-secondary">
-                <i class="fas fa-bug"></i>
-                گزارش مشکل
-            </a>
-        </div>
-
-        <form class="notify-form" id="notifyForm">
-            <input type="email" placeholder="ایمیل خود را وارد کنید..." required>
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-bell"></i>
-                اطلاع‌رسانی
-            </button>
-        </form>
-
-        <div class="social-links">
-            <a href="https://github.com/yourusername/farabekr" target="_blank">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="#" target="_blank">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" target="_blank">
-                <i class="fab fa-telegram"></i>
-            </a>
-            <a href="#" target="_blank">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" target="_blank">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-        </div>
-
-        <div class="footer">
-            © ۲۰۲۶ <a href="https://farabekr.com">فرابکر</a> — تمامی حقوق محفوظ است
+        <div class="footer" style="margin-top:20px;font-size:0.7rem;color:rgba(245,240,234,0.15);">
+            © ۲۰۲۶ <a href="https://farabekr.com" style="color:rgba(245,240,234,0.2);text-decoration:none;">فرابکر</a>
         </div>
     </div>
 
+    <!-- ========================================================== -->
+    <!-- ===== JAVASCRIPT ===== -->
+    <!-- ========================================================== -->
     <script>
+        // ===================================================
+        // ===== STATE ========================================
+        // ===================================================
+        let currentAccount = null;
+        let currentProvider = null;
+        let currentSigner = null;
+        let isConnected = false;
+
+        // ===================================================
+        // ===== DOM REFS =====================================
+        // ===================================================
+        const connectMetamaskBtn = document.getElementById('connectMetamask');
+        const connectPhantomBtn = document.getElementById('connectPhantom');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const walletStatus = document.getElementById('walletStatus');
+        const dashboard = document.getElementById('dashboard');
+        const userAddress = document.getElementById('userAddress');
+        const userName = document.getElementById('userName');
+        const userBalance = document.getElementById('userBalance');
+
+        // ===================================================
+        // ===== CONNECT WALLET ===============================
+        // ===================================================
+        async function connectWallet(type) {
+            try {
+                let provider;
+
+                if (type === 'metamask') {
+                    // بررسی وجود متامسک
+                    if (!window.ethereum) {
+                        walletStatus.innerHTML = '❌ متامسک نصب نیست! لطفاً آن را نصب کنید.';
+                        return;
+                    }
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                } else if (type === 'phantom') {
+                    // بررسی وجود فانتوم (از طریق provider اتریوم)
+                    if (!window.ethereum) {
+                        walletStatus.innerHTML = '❌ فانتوم نصب نیست! لطفاً آن را نصب کنید.';
+                        return;
+                    }
+                    // فانتوم از طریق provider اتریوم قابل دسترسه
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                } else {
+                    return;
+                }
+
+                // درخواست اتصال
+                await provider.send('eth_requestAccounts', []);
+                const signer = provider.getSigner();
+                const address = await signer.getAddress();
+
+                // ذخیره وضعیت
+                currentProvider = provider;
+                currentSigner = signer;
+                currentAccount = address;
+                isConnected = true;
+
+                // دریافت موجودی
+                const balance = await provider.getBalance(address);
+                const balanceEth = ethers.utils.formatEther(balance);
+
+                // به‌روزرسانی UI
+                showDashboard(address, balanceEth);
+
+                walletStatus.innerHTML = `
+                    ✅ متصل شدید به <span class="connected">${type === 'metamask' ? 'متامسک' : 'فانتوم'}</span>
+                `;
+
+                // غیرفعال کردن دکمه‌ها
+                connectMetamaskBtn.disabled = true;
+                connectPhantomBtn.disabled = true;
+
+            } catch (error) {
+                console.error('Connection error:', error);
+                if (error.code === 4001) {
+                    walletStatus.innerHTML = '❌ اتصال توسط کاربر رد شد';
+                } else {
+                    walletStatus.innerHTML = '❌ خطا در اتصال به کیف پول';
+                }
+            }
+        }
+
+        // ===================================================
+        // ===== SHOW DASHBOARD ===============================
+        // ===================================================
+        function showDashboard(address, balance) {
+            dashboard.classList.add('active');
+            userAddress.textContent = address.slice(0, 6) + '...' + address.slice(-4);
+            userName.textContent = 'کاربر عزیز';
+            userBalance.textContent = parseFloat(balance).toFixed(4) + ' ETH';
+
+            // تنظیمات آماری (نمایشی)
+            document.getElementById('statPoints').textContent = Math.floor(Math.random() * 500 + 50);
+            document.getElementById('statOrders').textContent = Math.floor(Math.random() * 20 + 1);
+            document.getElementById('statDiscount').textContent = Math.floor(Math.random() * 15 + 5) + '%';
+        }
+
+        // ===================================================
+        // ===== DISCONNECT ===================================
+        // ===================================================
+        function disconnectWallet() {
+            isConnected = false;
+            currentAccount = null;
+            currentProvider = null;
+            currentSigner = null;
+
+            dashboard.classList.remove('active');
+            walletStatus.innerHTML = '⚡ برای ورود، یکی از کیف پول‌های خود را متصل کنید';
+            connectMetamaskBtn.disabled = false;
+            connectPhantomBtn.disabled = false;
+        }
+
+        // ===================================================
+        // ===== EVENT LISTENERS ==============================
+        // ===================================================
+        connectMetamaskBtn.addEventListener('click', () => connectWallet('metamask'));
+        connectPhantomBtn.addEventListener('click', () => connectWallet('phantom'));
+        logoutBtn.addEventListener('click', disconnectWallet);
+
+        // ===================================================
+        // ===== COUNTDOWN ====================================
+        // ===================================================
         const targetDate = new Date('2026-09-01T00:00:00').getTime();
 
         function updateCountdown() {
@@ -621,36 +638,6 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
-
-        let progress = 78;
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-
-        function updateProgress() {
-            if (progress < 95) {
-                progress += Math.random() * 0.5;
-                progress = Math.min(progress, 95);
-                progressFill.style.width = progress + '%';
-                progressText.textContent = Math.round(progress) + '٪';
-            }
-        }
-
-        setInterval(updateProgress, 5000);
-
-        document.getElementById('notifyForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('input[type="email"]').value;
-            const btn = this.querySelector('button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i> ثبت شد!';
-            btn.style.background = 'linear-gradient(135deg, #2d6a2d, #1e4a1e)';
-            console.log('📧 ایمیل ثبت شد:', email);
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.background = '';
-                this.querySelector('input[type="email"]').value = '';
-            }, 3000);
-        });
     </script>
 
 </body>
