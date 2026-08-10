@@ -6,10 +6,15 @@
     <title>فرابکر | به زودی 🌿</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Ethers.js برای اتصال به کیف پول -->
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js">
+    </script>
     <style>
         /* ===== RESET & BASE ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap');
 
@@ -45,20 +50,78 @@
         }
 
         @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
         }
 
-        .particle:nth-child(1) { width: 300px; height: 300px; left: 10%; animation-duration: 20s; animation-delay: 0s; }
-        .particle:nth-child(2) { width: 200px; height: 200px; left: 30%; animation-duration: 25s; animation-delay: 3s; }
-        .particle:nth-child(3) { width: 400px; height: 400px; left: 50%; animation-duration: 30s; animation-delay: 6s; }
-        .particle:nth-child(4) { width: 150px; height: 150px; left: 70%; animation-duration: 22s; animation-delay: 2s; }
-        .particle:nth-child(5) { width: 250px; height: 250px; left: 85%; animation-duration: 28s; animation-delay: 8s; }
-        .particle:nth-child(6) { width: 180px; height: 180px; left: 20%; animation-duration: 18s; animation-delay: 5s; }
-        .particle:nth-child(7) { width: 350px; height: 350px; left: 60%; animation-duration: 35s; animation-delay: 1s; }
-        .particle:nth-child(8) { width: 120px; height: 120px; left: 40%; animation-duration: 15s; animation-delay: 9s; }
+        .particle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            left: 10%;
+            animation-duration: 20s;
+            animation-delay: 0s;
+        }
+        .particle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            left: 30%;
+            animation-duration: 25s;
+            animation-delay: 3s;
+        }
+        .particle:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            left: 50%;
+            animation-duration: 30s;
+            animation-delay: 6s;
+        }
+        .particle:nth-child(4) {
+            width: 150px;
+            height: 150px;
+            left: 70%;
+            animation-duration: 22s;
+            animation-delay: 2s;
+        }
+        .particle:nth-child(5) {
+            width: 250px;
+            height: 250px;
+            left: 85%;
+            animation-duration: 28s;
+            animation-delay: 8s;
+        }
+        .particle:nth-child(6) {
+            width: 180px;
+            height: 180px;
+            left: 20%;
+            animation-duration: 18s;
+            animation-delay: 5s;
+        }
+        .particle:nth-child(7) {
+            width: 350px;
+            height: 350px;
+            left: 60%;
+            animation-duration: 35s;
+            animation-delay: 1s;
+        }
+        .particle:nth-child(8) {
+            width: 120px;
+            height: 120px;
+            left: 40%;
+            animation-duration: 15s;
+            animation-delay: 9s;
+        }
 
         .glow-orb {
             position: fixed;
@@ -74,8 +137,15 @@
         }
 
         @keyframes pulseGlow {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
         }
 
         .container {
@@ -102,8 +172,13 @@
         }
 
         @keyframes shimmerLogo {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .logo-sub {
@@ -217,8 +292,14 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .dashboard .user-info {
@@ -312,6 +393,10 @@
             color: #2ecc71;
         }
 
+        .wallet-status .error {
+            color: #e74c3c;
+        }
+
         /* ===== COUNTDOWN ===== */
         .countdown {
             display: flex;
@@ -356,25 +441,69 @@
             display: block;
         }
 
+        .footer {
+            margin-top: 20px;
+            font-size: 0.7rem;
+            color: rgba(245, 240, 234, 0.15);
+        }
+
+        .footer a {
+            color: rgba(245, 240, 234, 0.2);
+            text-decoration: none;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .logo { font-size: 3rem; }
-            .main-title { font-size: 2rem; }
-            .countdown { gap: 12px; }
-            .countdown-item { padding: 12px 16px; min-width: 60px; }
-            .countdown-number { font-size: 1.8rem; }
-            .dashboard .stats { grid-template-columns: 1fr 1fr; }
-            .wallet-section { flex-direction: column; align-items: center; }
-            .wallet-btn { width: 100%; justify-content: center; }
+            .logo {
+                font-size: 3rem;
+            }
+            .main-title {
+                font-size: 2rem;
+            }
+            .countdown {
+                gap: 12px;
+            }
+            .countdown-item {
+                padding: 12px 16px;
+                min-width: 60px;
+            }
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+            .dashboard .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .wallet-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            .wallet-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
-            .logo { font-size: 2.2rem; }
-            .main-title { font-size: 1.6rem; }
-            .countdown { gap: 8px; }
-            .countdown-item { padding: 10px 12px; min-width: 50px; border-radius: 12px; }
-            .countdown-number { font-size: 1.4rem; }
-            .dashboard .stats { grid-template-columns: 1fr; }
+            .logo {
+                font-size: 2.2rem;
+            }
+            .main-title {
+                font-size: 1.6rem;
+            }
+            .countdown {
+                gap: 8px;
+            }
+            .countdown-item {
+                padding: 10px 12px;
+                min-width: 50px;
+                border-radius: 12px;
+            }
+            .countdown-number {
+                font-size: 1.4rem;
+            }
+            .dashboard .stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -480,8 +609,8 @@
             </div>
         </div>
 
-        <div class="footer" style="margin-top:20px;font-size:0.7rem;color:rgba(245,240,234,0.15);">
-            © ۲۰۲۶ <a href="https://farabekr.com" style="color:rgba(245,240,234,0.2);text-decoration:none;">فرابکر</a>
+        <div class="footer">
+            © ۲۰۲۶ <a href="https://farabekr.com">فرابکر</a> — تمامی حقوق محفوظ است
         </div>
     </div>
 
@@ -510,32 +639,47 @@
         const userBalance = document.getElementById('userBalance');
 
         // ===================================================
+        // ===== CHECK IF WALLET EXISTS ======================
+        // ===================================================
+        function checkWallet(type) {
+            if (type === 'metamask') {
+                return typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask;
+            } else if (type === 'phantom') {
+                // فانتوم از طریق provider اتریوم قابل دسترسه
+                return typeof window.ethereum !== 'undefined';
+            }
+            return false;
+        }
+
+        // ===================================================
         // ===== CONNECT WALLET ===============================
         // ===================================================
         async function connectWallet(type) {
             try {
+                // بررسی وجود کیف پول
+                if (type === 'metamask' && !checkWallet('metamask')) {
+                    walletStatus.innerHTML = '❌ متامسک نصب نیست! <a href="https://metamask.io/download/" target="_blank" style="color:#f6851b;">دانلود متامسک</a>';
+                    return;
+                }
+
+                if (type === 'phantom' && !checkWallet('phantom')) {
+                    walletStatus.innerHTML = '❌ فانتوم نصب نیست! <a href="https://phantom.app/" target="_blank" style="color:#ab9ff2;">دانلود فانتوم</a>';
+                    return;
+                }
+
+                // اتصال به provider
                 let provider;
 
                 if (type === 'metamask') {
-                    // بررسی وجود متامسک
-                    if (!window.ethereum) {
-                        walletStatus.innerHTML = '❌ متامسک نصب نیست! لطفاً آن را نصب کنید.';
-                        return;
-                    }
                     provider = new ethers.providers.Web3Provider(window.ethereum);
                 } else if (type === 'phantom') {
-                    // بررسی وجود فانتوم (از طریق provider اتریوم)
-                    if (!window.ethereum) {
-                        walletStatus.innerHTML = '❌ فانتوم نصب نیست! لطفاً آن را نصب کنید.';
-                        return;
-                    }
-                    // فانتوم از طریق provider اتریوم قابل دسترسه
+                    // فانتوم از طریق provider اتریوم
                     provider = new ethers.providers.Web3Provider(window.ethereum);
                 } else {
                     return;
                 }
 
-                // درخواست اتصال
+                // درخواست اتصال به حساب
                 await provider.send('eth_requestAccounts', []);
                 const signer = provider.getSigner();
                 const address = await signer.getAddress();
@@ -554,8 +698,8 @@
                 showDashboard(address, balanceEth);
 
                 walletStatus.innerHTML = `
-                    ✅ متصل شدید به <span class="connected">${type === 'metamask' ? 'متامسک' : 'فانتوم'}</span>
-                `;
+                            ✅ متصل شدید به <span class="connected">${type === 'metamask' ? 'متامسک' : 'فانتوم'}</span>
+                        `;
 
                 // غیرفعال کردن دکمه‌ها
                 connectMetamaskBtn.disabled = true;
@@ -563,10 +707,13 @@
 
             } catch (error) {
                 console.error('Connection error:', error);
+
                 if (error.code === 4001) {
                     walletStatus.innerHTML = '❌ اتصال توسط کاربر رد شد';
+                } else if (error.code === -32002) {
+                    walletStatus.innerHTML = '⏳ درخواست اتصال قبلاً ارسال شده. لطفاً کیف پول خود را بررسی کنید.';
                 } else {
-                    walletStatus.innerHTML = '❌ خطا در اتصال به کیف پول';
+                    walletStatus.innerHTML = '❌ خطا در اتصال به کیف پول: ' + error.message;
                 }
             }
         }
@@ -638,6 +785,18 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // ===================================================
+        // ===== AUTO-CONNECT CHECK ===========================
+        // ===================================================
+        // بررسی اینکه آیا کیف پول قبلاً متصل بوده
+        if (window.ethereum && window.ethereum.selectedAddress) {
+            // کاربر قبلاً متصل بوده، اما برای امنیت دوباره درخواست نمی‌کنیم
+            // کاربر باید خودش دکمه رو بزنه
+        }
+
+        console.log('🌿 فرابکر - بازارچه هوشمند رودبار');
+        console.log('🔗 برای اتصال، روی دکمه کیف پول کلیک کنید');
     </script>
 
 </body>
